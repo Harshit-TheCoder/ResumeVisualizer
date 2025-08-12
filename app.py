@@ -74,7 +74,7 @@ if st.button("Optimised Resume"):
             d. Skills
                 1)Skill name (if available)
             e. Projects (if required) instruction -> FOLLOW REVERSE CHRONOLOGICAL ORDER
-                1)Company Name (if available)
+                1)Project Name (if available)
                 2)Start Date and End Date (if available)
                 3)Role (if available)
                 4)Location (if available)
