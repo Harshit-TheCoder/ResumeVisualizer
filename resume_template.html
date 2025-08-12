@@ -78,8 +78,13 @@
                 </div>
                 {% if exp.DESCRIPTION %}
                 <ul class="list-disc list-inside mt-1">
-                    {% for desc in exp.DESCRIPTION %}
-                    <li>{{ desc }}</li>
+                    {% for line in exp.DESCRIPTION %}
+                    <!-- {% if line.strip().startswith('•') %} -->
+                            <!-- <li>{{ line.lstrip('• ').strip() }}</li> -->
+                        <!-- {% else %} -->
+                            <p>{{ line }}</p>
+                    <!-- {% endif %} -->
+                    <!-- <li>{{ desc }}</li> -->
                     {% endfor %}
                 </ul>
                 {% endif %}
@@ -121,8 +126,12 @@
                 </div>
                 {% if proj.DESCRIPTION %}
                 <ul class="list-disc list-inside mt-1">
-                    {% for desc in proj.DESCRIPTION %}
-                    <li>{{ desc }}</li>
+                    {% for line in proj.DESCRIPTION %}
+                        <!-- {% if line.strip().startswith('•') %}
+                            <li>{{ line.lstrip('• ').strip() }}</li>
+                        {% else %} -->
+                            <p>{{ line }}</p>
+                        <!-- {% endif %} -->
                     {% endfor %}
                 </ul>
                 {% endif %}
@@ -137,8 +146,12 @@
         <section>
             <h2 class="text-2xl font-semibold text-blue-700 border-b-2 border-blue-700 pb-1 mb-3">Achievements</h2>
             <ul class="list-disc list-inside">
-                {% for ach in Achievements %}
-                <li>{{ ach }}</li>
+                {% for line in Achievements %}
+                    <!-- {% if line.strip().startswith('•') %}
+                            <li>{{ line.lstrip('• ').strip() }}</li>
+                        {% else %} -->
+                            <p>{{ line }}</p>
+                        <!-- {% endif %} -->
                 {% endfor %}
             </ul>
         </section>

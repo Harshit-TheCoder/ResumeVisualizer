@@ -78,7 +78,7 @@ if st.button("Optimised Resume"):
         Job Description:
         {job_description}
         Provide:
-        1. The optimised resume (ATS friendly, professional format)
+        1. The optimised resume (ATS friendly, professional format) USE ATS KEYWORDS
         2. Divide the resume into sections 
             a. Full Name followed by email id (if given), contact number (if given)
             b. Contact Details
@@ -95,7 +95,7 @@ if st.button("Optimised Resume"):
                 2)Start Date and End Date (if available) USE KEY NAME -> START_DATE, END_DATE
                 3)Role (if available) USE KEY NAME -> ROLE
                 4)Location (if available) USE KEY NAME -> LOCATION
-                5)Description of your job/internship (if available) USE KEY NAME -> DESCRIPTION
+                5)Description of your job/internship (if available) USE KEY NAME -> DESCRIPTION GIVE AS A LIST OF SENTENCES
                 6)Work Link (if available) USE KEY NAME -> LINK
             d. Skills
                 1)Skill name (if available) 
@@ -104,7 +104,7 @@ if st.button("Optimised Resume"):
                 2)Start Date and End Date (if available) USE KEY NAME -> START_DATE, END_DATE
                 3)Role (if available) USE KEY NAME -> ROLE
                 4)Location (if available) USE KEY NAME -> LOCATION
-                5)Description of your job/internship (if available) USE KEY NAME -> DESCRIPTION
+                5)Description of your job/internship (if available) USE KEY NAME -> DESCRIPTION GIVE AS LIST OF SENTENCES
                 3)Project Link OR Code link (if available) USE KEY NAME -> LINK
             f. Achievements
                 1)Description (if available)
@@ -161,12 +161,13 @@ if st.button("Optimised Resume"):
             rendered_html = template.render(**resume_json)
 
             with col1:
-                    if uploaded_file.name.endswith(".pdf"):
-                        uploaded_file.seek(0)  # reset file pointer before reading again
-                        display_pdf_from_upload(uploaded_file)
-                    else:
-                        st.info("Original resume preview available only for PDF files.")
-
+                st.header("Key Changes Made")
+                key_changes = resume_json.get("Key_Changes", [])
+                if key_changes:
+                    for change in key_changes:
+                        st.markdown(f"- {change}")
+                else:
+                    st.write("No key changes found.")
                 # Show optimized resume HTML on right
             with col2:
                 components.html(rendered_html, height=1000,width=650, scrolling=True)
