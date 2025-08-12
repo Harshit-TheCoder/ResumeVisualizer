@@ -57,18 +57,32 @@
             <h2 class="text-2xl font-semibold text-blue-700 border-b-2 border-blue-700 pb-1 mb-3">Experience</h2>
             {% for exp in Experience %}
             <div class="mb-4">
-                <p class="font-bold">{{ exp["Role"] }}{% if exp["Company Name"] %} | {{ exp["Company Name"] }}{% endif %}</p>
-                {% if exp["Location"] %}<p class="italic text-sm">{{ exp["Location"] }}</p>{% endif %}
-                {% if exp["Start Date"] or exp["End Date"] %}
-                <p class="text-sm text-gray-600">{{ exp["Start Date"] }} – {{ exp["End Date"] }}</p>
-                {% endif %}
-                {% if exp.Description %}
-                <ul class="list-disc list-inside mt-1">
-                    {% for desc in exp.Description %}
-                    <li>{{ desc }}</li>
-                    {% endfor %}
-                </ul>
-                {% endif %}
+                <div>
+                    <div class="flex flex-row gap-4 justify-between">
+                        <div class="flex flex-col gap-2">
+                            <div><p class="font-bold">{{ exp["Role"] }}</p></div>
+                            <div><p class="font-bold">{% if exp["Company Name"] %}{{ exp["Company Name"] }}{% endif %}</p></div>
+                        </div>
+                        <div class="flex flex-col gap-2">
+                            <div>{% if exp["Location"] %}<p class="italic text-sm">{{ exp["Location"] }}</p>{% endif %}</div>
+                            <div>
+                                {% if exp["Start Date"] or exp["End Date"] %}
+                                <p class="text-sm text-gray-600">{{ exp["Start Date"] }} - {{ exp["End Date"] }}</p>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        {% if exp.Description %}
+                        <ul class="list-disc list-inside mt-1">
+                            {% for desc in exp.Description %}
+                            <li>{{ desc }}</li>
+                            {% endfor %}
+                        </ul>
+                        {% endif %}
+                    </div>
+                </div>
+                   
             </div>
             {% endfor %}
         </section>
