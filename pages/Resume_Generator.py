@@ -8,76 +8,212 @@ full_name = st.text_input("Full Name", key="full_name")
 email = st.text_input("Email", key="email")
 phone = st.text_input("Phone Number", key="phone")
 
-st.header("Social Media Accounts (Max 10)")
+# --- Social Media Accounts (Max 5) ---
+st.header("Social Media Accounts (Max 5)")
+if "accounts" not in st.session_state:
+    st.session_state.accounts = [{"platform": "", "link": ""} for _ in range(5)]
 
-accounts = []
-for i in range(10):
-    platform = st.text_input(f"Platform #{i+1}", key=f"account_platform_{i}")
-    link = st.text_input(f"Link #{i+1}", key=f"account_link_{i}")
-    accounts.append({"platform": platform, "link": link})
+for i in range(5):
+    st.session_state.accounts[i]["platform"] = st.text_input(
+        f"Platform #{i+1}", value=st.session_state.accounts[i]["platform"], key=f"account_platform_{i}"
+    )
+    st.session_state.accounts[i]["link"] = st.text_input(
+        f"Link #{i+1}", value=st.session_state.accounts[i]["link"], key=f"account_link_{i}"
+    )
 
-# --- Experience (Fixed 10) ---
-st.header("Experience (Reverse Chronological Order, 10 Fields)")
+# --- Education (Max 5) ---
+st.header("Education (Max 5)")
+if "educations" not in st.session_state:
+    st.session_state.educations = [
+        {"STUDY_PLACE": "", "START_DATE": "", "END_DATE": "", "COURSE": "", "GRADE": ""}
+        for _ in range(5)
+    ]
+
+for i in range(5):
+    st.session_state.educations[i]["STUDY_PLACE"] = st.text_input(
+        f"School/College/Institute Name #{i+1}",
+        value=st.session_state.educations[i]["STUDY_PLACE"],
+        key=f"study_place_{i}",
+    )
+    st.session_state.educations[i]["START_DATE"] = st.text_input(
+        f"Start Date #{i+1}",
+        value=st.session_state.educations[i]["START_DATE"],
+        key=f"start_date_edu_{i}",
+    )
+    st.session_state.educations[i]["END_DATE"] = st.text_input(
+        f"End Date #{i+1}",
+        value=st.session_state.educations[i]["END_DATE"],
+        key=f"end_date_edu_{i}",
+    )
+    st.session_state.educations[i]["COURSE"] = st.text_input(
+        f"Course Name #{i+1}",
+        value=st.session_state.educations[i]["COURSE"],
+        key=f"course_{i}",
+    )
+    st.session_state.educations[i]["GRADE"] = st.text_input(
+        f"Grade #{i+1}",
+        value=st.session_state.educations[i]["GRADE"],
+        key=f"grade_{i}",
+    )
+
+# --- Experience (Max 10) ---
+st.header("Experience (Reverse Chronological Order, Max 10)")
 if "experiences" not in st.session_state:
     st.session_state.experiences = [
-        {"COMPANY": "", "START_DATE": "", "END_DATE": "", "ROLE": "", "LOCATION": "", "DESCRIPTION": "", "LINK": ""}
+        {
+            "COMPANY": "",
+            "START_DATE": "",
+            "END_DATE": "",
+            "ROLE": "",
+            "LOCATION": "",
+            "DESCRIPTION": "",
+            "LINK": "",
+        }
         for _ in range(10)
     ]
 
 for i in range(10):
     st.markdown(f"### Experience #{i+1}")
-    st.session_state.experiences[i]["COMPANY"] = st.text_input(f"Company Name #{i+1}", value=st.session_state.experiences[i]["COMPANY"], key=f"company_{i}")
-    st.session_state.experiences[i]["START_DATE"] = st.text_input(f"Start Date #{i+1}", value=st.session_state.experiences[i]["START_DATE"], key=f"start_date_exp_{i}")
-    st.session_state.experiences[i]["END_DATE"] = st.text_input(f"End Date #{i+1}", value=st.session_state.experiences[i]["END_DATE"], key=f"end_date_exp_{i}")
-    st.session_state.experiences[i]["ROLE"] = st.text_input(f"Role #{i+1}", value=st.session_state.experiences[i]["ROLE"], key=f"role_{i}")
-    st.session_state.experiences[i]["LOCATION"] = st.text_input(f"Location #{i+1}", value=st.session_state.experiences[i]["LOCATION"], key=f"location_{i}")
-    st.session_state.experiences[i]["DESCRIPTION"] = st.text_area(f"Job Description #{i+1}", value=st.session_state.experiences[i]["DESCRIPTION"], key=f"desc_{i}")
-    st.session_state.experiences[i]["LINK"] = st.text_input(f"Work Link #{i+1}", value=st.session_state.experiences[i]["LINK"], key=f"work_link_{i}")
+    st.session_state.experiences[i]["COMPANY"] = st.text_input(
+        f"Company Name #{i+1}",
+        value=st.session_state.experiences[i]["COMPANY"],
+        key=f"company_{i}",
+    )
+    st.session_state.experiences[i]["START_DATE"] = st.text_input(
+        f"Start Date #{i+1}",
+        value=st.session_state.experiences[i]["START_DATE"],
+        key=f"start_date_exp_{i}",
+    )
+    st.session_state.experiences[i]["END_DATE"] = st.text_input(
+        f"End Date #{i+1}",
+        value=st.session_state.experiences[i]["END_DATE"],
+        key=f"end_date_exp_{i}",
+    )
+    st.session_state.experiences[i]["ROLE"] = st.text_input(
+        f"Role #{i+1}", value=st.session_state.experiences[i]["ROLE"], key=f"role_{i}"
+    )
+    st.session_state.experiences[i]["LOCATION"] = st.text_input(
+        f"Location #{i+1}",
+        value=st.session_state.experiences[i]["LOCATION"],
+        key=f"location_{i}",
+    )
+    st.session_state.experiences[i]["DESCRIPTION"] = st.text_area(
+        f"Job Description #{i+1}",
+        value=st.session_state.experiences[i]["DESCRIPTION"],
+        key=f"desc_{i}",
+        height=100,
+    )
+    st.session_state.experiences[i]["LINK"] = st.text_input(
+        f"Work Link #{i+1}", value=st.session_state.experiences[i]["LINK"], key=f"work_link_{i}"
+    )
 
-# --- Projects (Fixed 5) ---
-st.header("Projects (Reverse Chronological Order, 5 Fields)")
+# --- Projects (Max 5) ---
+st.header("Projects (Reverse Chronological Order, Max 5)")
 if "projects" not in st.session_state:
     st.session_state.projects = [
-        {"PROJECT_NAME": "", "START_DATE": "", "END_DATE": "", "ROLE": "", "LOCATION": "", "DESCRIPTION": "", "LINK": ""}
+        {
+            "PROJECT_NAME": "",
+            "START_DATE": "",
+            "END_DATE": "",
+            "ROLE": "",
+            "LOCATION": "",
+            "DESCRIPTION": "",
+            "LINK": "",
+        }
         for _ in range(5)
     ]
 
 for i in range(5):
     st.markdown(f"### Project #{i+1}")
-    st.session_state.projects[i]["PROJECT_NAME"] = st.text_input(f"Project Name #{i+1}", value=st.session_state.projects[i]["PROJECT_NAME"], key=f"project_name_{i}")
-    st.session_state.projects[i]["START_DATE"] = st.text_input(f"Start Date #{i+1}", value=st.session_state.projects[i]["START_DATE"], key=f"start_date_proj_{i}")
-    st.session_state.projects[i]["END_DATE"] = st.text_input(f"End Date #{i+1}", value=st.session_state.projects[i]["END_DATE"], key=f"end_date_proj_{i}")
-    st.session_state.projects[i]["ROLE"] = st.text_input(f"Role #{i+1}", value=st.session_state.projects[i]["ROLE"], key=f"role_proj_{i}")
-    st.session_state.projects[i]["LOCATION"] = st.text_input(f"Location #{i+1}", value=st.session_state.projects[i]["LOCATION"], key=f"location_proj_{i}")
-    st.session_state.projects[i]["DESCRIPTION"] = st.text_area(f"Project Description #{i+1}", value=st.session_state.projects[i]["DESCRIPTION"], key=f"proj_desc_{i}")
-    st.session_state.projects[i]["LINK"] = st.text_input(f"Project Link #{i+1}", value=st.session_state.projects[i]["LINK"], key=f"proj_link_{i}")
+    st.session_state.projects[i]["PROJECT_NAME"] = st.text_input(
+        f"Project Name #{i+1}",
+        value=st.session_state.projects[i]["PROJECT_NAME"],
+        key=f"project_name_{i}",
+    )
+    st.session_state.projects[i]["START_DATE"] = st.text_input(
+        f"Start Date #{i+1}",
+        value=st.session_state.projects[i]["START_DATE"],
+        key=f"start_date_proj_{i}",
+    )
+    st.session_state.projects[i]["END_DATE"] = st.text_input(
+        f"End Date #{i+1}",
+        value=st.session_state.projects[i]["END_DATE"],
+        key=f"end_date_proj_{i}",
+    )
+    st.session_state.projects[i]["ROLE"] = st.text_input(
+        f"Role #{i+1}", value=st.session_state.projects[i]["ROLE"], key=f"role_proj_{i}"
+    )
+    st.session_state.projects[i]["LOCATION"] = st.text_input(
+        f"Location #{i+1}",
+        value=st.session_state.projects[i]["LOCATION"],
+        key=f"location_proj_{i}",
+    )
+    st.session_state.projects[i]["DESCRIPTION"] = st.text_area(
+        f"Project Description #{i+1}",
+        value=st.session_state.projects[i]["DESCRIPTION"],
+        key=f"proj_desc_{i}",
+        height=100,
+    )
+    st.session_state.projects[i]["LINK"] = st.text_input(
+        f"Project Link #{i+1}",
+        value=st.session_state.projects[i]["LINK"],
+        key=f"proj_link_{i}",
+    )
 
-st.header("Skills (max 50)")
-skills = []
+# --- Skills (Max 50) ---
+st.header("Skills (Max 50)")
+if "skills" not in st.session_state:
+    st.session_state.skills = [""] * 50
+
 for i in range(50):
-    skill = st.text_input(f"Skill #{i+1}", key=f"skill_{i}")
-    skills.append(skill)
+    st.session_state.skills[i] = st.text_input(
+        f"Skill #{i+1}", value=st.session_state.skills[i], key=f"skill_{i}"
+    )
 
-st.header("Languages (max 10)")
-languages = []
+# --- Languages (Max 10) ---
+st.header("Languages (Max 10)")
+if "languages" not in st.session_state:
+    st.session_state.languages = [""] * 10
+
 for i in range(10):
-    lang = st.text_input(f"Language #{i+1}", key=f"language_{i}")
-    languages.append(lang)
+    st.session_state.languages[i] = st.text_input(
+        f"Language #{i+1}", value=st.session_state.languages[i], key=f"language_{i}"
+    )
 
-st.header("Certifications (max 5)")
-certifications = []
+# --- Certifications (Max 5) ---
+st.header("Certifications (Max 5)")
+if "certifications" not in st.session_state:
+    st.session_state.certifications = [{"NAME": "", "LINK": ""} for _ in range(5)]
+
 for i in range(5):
-    cert_name = st.text_input(f"Certification Name #{i+1}", key=f"cert_name_{i}")
-    cert_link = st.text_input(f"Certification Link #{i+1}", key=f"cert_link_{i}")
-    certifications.append({"NAME": cert_name, "LINK": cert_link})
+    st.session_state.certifications[i]["NAME"] = st.text_input(
+        f"Certification Name #{i+1}",
+        value=st.session_state.certifications[i]["NAME"],
+        key=f"cert_name_{i}",
+    )
+    st.session_state.certifications[i]["LINK"] = st.text_input(
+        f"Certification Link #{i+1}",
+        value=st.session_state.certifications[i]["LINK"],
+        key=f"cert_link_{i}",
+    )
+
+# --- Achievements (Max 20) ---
+st.header("Achievements (Max 5)")
+if "achievements" not in st.session_state:
+    st.session_state.achievements = [""] * 5
+
+for i in range(5):
+    st.session_state.achievements[i] = st.text_area(
+        f"Achievement #{i+1}", value=st.session_state.achievements[i], key=f"achievement_{i}"
+    )
 
 # --- Show Resume JSON ---
 if st.button("Show Resume JSON"):
+
     def is_filled(entry):
         if isinstance(entry, dict):
             return any(str(v).strip() for v in entry.values())
         elif isinstance(entry, list):
-            # For lists like DESCRIPTION or just lists of strings, check if any non-empty
             return any(str(item).strip() for item in entry)
         else:
             return bool(entry)
@@ -96,4 +232,3 @@ if st.button("Show Resume JSON"):
         "CERTIFICATIONS": [cert for cert in st.session_state.certifications if is_filled(cert)],
     }
     st.json(resume_json)
-
