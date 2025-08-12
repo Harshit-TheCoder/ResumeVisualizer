@@ -4,8 +4,9 @@ import docx
 import os
 import google.generativeai as genai
 from jinja2 import Environment, FileSystemLoader
-import pdfkit
+import streamlit.components.v1 as components
 import json
+import re
 from dotenv import load_dotenv
 load_dotenv()
 
@@ -114,7 +115,41 @@ if st.button("Optimised Resume"):
 
         with st.spinner("Optimising your resume..."):
             response = model.generate_content(prompt)
-            print(response.text)
+            raw_text = response.text.strip()
+
+            # If Gemini returns code fences like ```json ... ```
+            if raw_text.startswith("```"):
+                raw_text = re.sub(r"^```[a-zA-Z]*\n", "", raw_text)  # remove opening fence
+                raw_text = re.sub(r"```$", "", raw_text)  # remove closing fence
+            
+            print(raw_text)
+            try:
+                resume_json = json.loads(raw_text)
+            except json.JSONDecodeError as e:
+                st.error(f"❌ JSON decoding failed: {e}")
+                st.write("Raw response was:", raw_text)
+                st.stop()
+            rendered_html = template.render(**resume_json)
+
+            # with open("output_resume.html", "w", encoding="utf-8") as f:
+            #     f.write(rendered_html)
+
+            # # Convert HTML to PDF
+            # pdf_path = "output_resume.pdf"
+            # HTML("output_resume.html").write_pdf("output_resume.pdf")
+
+            # # Display PDF download
+            # with open(pdf_path, "rb") as f:
+            #     st.download_button(
+            #         label="📥 Download Optimised Resume PDF",
+            #         data=f,
+            #         file_name="Optimised_Resume.pdf",
+            #         mime="application/pdf"
+            #     )
+
+            # Preview in browser
+            components.html(rendered_html, height=1000, scrolling=True)
+            # st.markdown(rendered_html, unsafe_allow_html=True)
     else:
         st.warning("Please upload a resume and enter the job description.")
 
