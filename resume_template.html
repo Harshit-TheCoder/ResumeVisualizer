@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ Name }} - Resume</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-white text-gray-800 font-sans p-8">
+
+    <!-- HEADER -->
+    <header class="text-center border-b border-gray-300 pb-4 mb-6">
+        <h1 class="text-4xl font-bold text-blue-800">{{ Name }}</h1>
+        {% if Contact %}
+        <div class="mt-2 text-gray-600 text-sm">
+            {{ Contact }}
+        </div>
+        {% endif %}
+    </header>
+
+    <main class="max-w-5xl mx-auto space-y-8">
+
+        <!-- EDUCATION -->
+        {% if Education %}
+        <section>
+            <h2 class="text-2xl font-semibold text-blue-700 border-b-2 border-blue-700 pb-1 mb-3">Education</h2>
+            {% for edu in Education %}
+            <div class="mb-3">
+                <p class="font-bold">{{ edu["School/College/Institute Name"] }}</p>
+                {% if edu["Course Name"] %}<p>{{ edu["Course Name"] }}</p>{% endif %}
+                {% if edu["Grade"] %}<p>{{ edu["Grade"] }}</p>{% endif %}
+                {% if edu["Start Date"] or edu["End Date"] %}
+                <p class="text-sm text-gray-600">{{ edu["Start Date"] }} – {{ edu["End Date"] }}</p>
+                {% endif %}
+            </div>
+            {% endfor %}
+        </section>
+        {% endif %}
+
+        <!-- EXPERIENCE -->
+        {% if Experience %}
+        <section>
+            <h2 class="text-2xl font-semibold text-blue-700 border-b-2 border-blue-700 pb-1 mb-3">Experience</h2>
+            {% for exp in Experience %}
+            <div class="mb-4">
+                <p class="font-bold">{{ exp["Role"] }}{% if exp["Company Name"] %} | {{ exp["Company Name"] }}{% endif %}</p>
+                {% if exp["Location"] %}<p class="italic text-sm">{{ exp["Location"] }}</p>{% endif %}
+                {% if exp["Start Date"] or exp["End Date"] %}
+                <p class="text-sm text-gray-600">{{ exp["Start Date"] }} – {{ exp["End Date"] }}</p>
+                {% endif %}
+                {% if exp.Description %}
+                <ul class="list-disc list-inside mt-1">
+                    {% for desc in exp.Description %}
+                    <li>{{ desc }}</li>
+                    {% endfor %}
+                </ul>
+                {% endif %}
+            </div>
+            {% endfor %}
+        </section>
+        {% endif %}
+
+        <!-- SKILLS -->
+        {% if Skills %}
+        <section>
+            <h2 class="text-2xl font-semibold text-blue-700 border-b-2 border-blue-700 pb-1 mb-3">Skills</h2>
+            <ul class="grid grid-cols-2 gap-x-6 list-disc list-inside">
+                {% for skill in Skills %}
+                <li>{{ skill }}</li>
+                {% endfor %}
+            </ul>
+        </section>
+        {% endif %}
+
+        <!-- PROJECTS -->
+        {% if Projects %}
+        <section>
+            <h2 class="text-2xl font-semibold text-blue-700 border-b-2 border-blue-700 pb-1 mb-3">Projects</h2>
+            {% for proj in Projects %}
+            <div class="mb-4">
+                {% if proj["Role"] or proj["Company Name"] %}
+                <p class="font-bold">{{ proj["Role"] or "Project" }}{% if proj["Company Name"] %} | {{ proj["Company Name"] }}{% endif %}</p>
+                {% endif %}
+                {% if proj["Location"] %}<p class="italic text-sm">{{ proj["Location"] }}</p>{% endif %}
+                {% if proj["Start Date"] or proj["End Date"] %}
+                <p class="text-sm text-gray-600">{{ proj["Start Date"] }} – {{ proj["End Date"] }}</p>
+                {% endif %}
+                {% if proj.Description %}
+                <ul class="list-disc list-inside mt-1">
+                    {% for desc in proj.Description %}
+                    <li>{{ desc }}</li>
+                    {% endfor %}
+                </ul>
+                {% endif %}
+            </div>
+            {% endfor %}
+        </section>
+        {% endif %}
+
+        <!-- ACHIEVEMENTS -->
+        {% if Achievements %}
+        <section>
+            <h2 class="text-2xl font-semibold text-blue-700 border-b-2 border-blue-700 pb-1 mb-3">Achievements</h2>
+            <ul class="list-disc list-inside">
+                {% for ach in Achievements %}
+                <li>{{ ach }}</li>
+                {% endfor %}
+            </ul>
+        </section>
+        {% endif %}
+
+        <!-- LANGUAGES -->
+        {% if Languages %}
+        <section>
+            <h2 class="text-2xl font-semibold text-blue-700 border-b-2 border-blue-700 pb-1 mb-3">Languages</h2>
+            <p>{{ Languages | join(", ") }}</p>
+        </section>
+        {% endif %}
+
+        <!-- CERTIFICATIONS -->
+        {% if Certifications %}
+        <section>
+            <h2 class="text-2xl font-semibold text-blue-700 border-b-2 border-blue-700 pb-1 mb-3">Certifications</h2>
+            <ul class="list-disc list-inside">
+                {% for cert in Certifications %}
+                <li>{{ cert }}</li>
+                {% endfor %}
+            </ul>
+        </section>
+        {% endif %}
+
+        <!-- KEY CHANGES -->
+        {% if Key_Changes %}
+        <section>
+            <h2 class="text-2xl font-semibold text-blue-700 border-b-2 border-blue-700 pb-1 mb-3">Key Changes Made</h2>
+            <ul class="list-disc list-inside">
+                {% for change in Key_Changes %}
+                <li>{{ change }}</li>
+                {% endfor %}
+            </ul>
+        </section>
+        {% endif %}
+
+    </main>
+
+</body>
+</html>
