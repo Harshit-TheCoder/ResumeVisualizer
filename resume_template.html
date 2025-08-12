@@ -5,6 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ Name }} - Resume</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+    @media print {
+        #download-btn {
+            display: none;
+        }
+    }
+    </style>
 </head>
 <body class="bg-white text-gray-800 font-sans p-8">
 
@@ -163,7 +170,7 @@
         
 
         <!-- DOWNLOAD BUTTON -->
-        <button onclick="window.print()" class="mt-6 bg-blue-500 text-white px-4 py-2 rounded">
+        <button id="download-btn" onclick="window.print()" class="mt-6 bg-blue-500 text-white px-4 py-2 rounded">
             Download as PDF
         </button>
     </main>

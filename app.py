@@ -7,6 +7,7 @@ from jinja2 import Environment, FileSystemLoader
 import streamlit.components.v1 as components
 import json
 import re
+import base64
 from dotenv import load_dotenv
 load_dotenv()
 
@@ -16,9 +17,26 @@ model = genai.GenerativeModel("gemini-2.5-flash")
 
 st.title("📄 AI Resume Optimiser & Generator")
 st.write("Upload your resume and paste a job description to get an ATS-friendly optimised version")
+st.markdown(
+    """
+    <style>
+    /* remove horizontal padding/margin from Streamlit main content */
+    .block-container {
+        padding-left: 5rem;
+        padding-right: 0rem;
+        max-width: 100vw;
+        margin-left: 5;
+        margin-right: 0;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True,
+)
 
-uploaded_file = st.file_uploader("Upload Resume (PDF/DOCX)", type=["pdf", "docx"])
-job_description = st.text_area("Paste Job Description", height=200)
+col1, col2 = st.columns([1, 1])
+
+uploaded_file = st.file_uploader("Upload Resume (PDF/DOCX)", type=["pdf", "docx"], width=700)
+job_description = st.text_area("Paste Job Description", height=200, width=700)
 
 env = Environment(loader=FileSystemLoader('.'))
 template = env.get_template('resume_template.html')
@@ -36,6 +54,13 @@ def extract_text_from_docx(file):
     for p in doc.paragraphs:
         text += p.text + "\n"
     return text
+
+def display_pdf_from_upload(uploaded_file):
+    # Read uploaded PDF bytes and encode to base64 for iframe display
+    pdf_bytes = uploaded_file.read()
+    base64_pdf = base64.b64encode(pdf_bytes).decode('utf-8')
+    pdf_display = f'<iframe src="data:application/pdf;base64,{base64_pdf}" width="100%" height="1000" type="application/pdf"></iframe>'
+    st.markdown(pdf_display, unsafe_allow_html=True)
 
 if st.button("Optimised Resume"):
     if uploaded_file and job_description:
@@ -135,24 +160,16 @@ if st.button("Optimised Resume"):
                 st.stop()
             rendered_html = template.render(**resume_json)
 
-            # with open("output_resume.html", "w", encoding="utf-8") as f:
-            #     f.write(rendered_html)
+            with col1:
+                    if uploaded_file.name.endswith(".pdf"):
+                        uploaded_file.seek(0)  # reset file pointer before reading again
+                        display_pdf_from_upload(uploaded_file)
+                    else:
+                        st.info("Original resume preview available only for PDF files.")
 
-            # # Convert HTML to PDF
-            # pdf_path = "output_resume.pdf"
-            # HTML("output_resume.html").write_pdf("output_resume.pdf")
-
-            # # Display PDF download
-            # with open(pdf_path, "rb") as f:
-            #     st.download_button(
-            #         label="📥 Download Optimised Resume PDF",
-            #         data=f,
-            #         file_name="Optimised_Resume.pdf",
-            #         mime="application/pdf"
-            #     )
-
-            # Preview in browser
-            components.html(rendered_html, height=1000, scrolling=True)
+                # Show optimized resume HTML on right
+            with col2:
+                components.html(rendered_html, height=1000,width=650, scrolling=True)
             # st.markdown(rendered_html, unsafe_allow_html=True)
     else:
         st.warning("Please upload a resume and enter the job description.")
