@@ -57,7 +57,7 @@
             <h2 class="text-2xl font-semibold text-blue-700 border-b-2 border-blue-700 pb-1 mb-3">Experience</h2>
             {% for exp in Experience %}
             <div class="mb-4">
-                <div>
+                <div  class="flex flex-col gap-2">
                     <div class="flex flex-row gap-4 justify-between">
                         <div class="flex flex-col gap-2">
                             <div><p class="font-bold">{{ exp["Role"] }}</p></div>
@@ -81,8 +81,7 @@
                         </ul>
                         {% endif %}
                     </div>
-                </div>
-                   
+                </div>    
             </div>
             {% endfor %}
         </section>
@@ -92,11 +91,11 @@
         {% if Skills %}
         <section>
             <h2 class="text-2xl font-semibold text-blue-700 border-b-2 border-blue-700 pb-1 mb-3">Skills</h2>
-            <ul class="grid grid-cols-2 gap-x-6 list-disc list-inside">
+            <div class="flex flex-wrap">
                 {% for skill in Skills %}
-                <li>{{ skill }}</li>
+                <div>{{ skill }}</div>
                 {% endfor %}
-            </ul>
+            </div>
         </section>
         {% endif %}
 
