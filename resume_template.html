@@ -13,7 +13,15 @@
         <h1 class="text-4xl font-bold text-blue-800">{{ Name }}</h1>
         {% if Contact %}
         <div class="mt-2 text-gray-600 text-sm">
-            {{ Contact }}
+            {% if Contact.EMAIL %}Email: {{ Contact.EMAIL }}{% endif %}
+            {% if Contact.PHONE %} | Phone: {{ Contact.PHONE }}{% endif %}
+        </div>
+        {% endif %}
+        {% if Contact.ACCOUNTS %}
+        <div class="mt-2 text-gray-600 text-sm">
+            {% for acc in Contact.ACCOUNTS %}
+                <a href="{{ acc.link }}" target="_blank" class="underline">{{ acc.platform }}</a>{% if not loop.last %} | {% endif %}
+            {% endfor %}
         </div>
         {% endif %}
     </header>
@@ -27,25 +35,17 @@
             {% for edu in Education %}
             <div class="mb-3">
                 <div class="flex flex-row gap-4 justify-between">
-                    <div class="flex flex-col gap-2">
-                        <div>
-                            <p class="font-bold">{{ edu["School/College/Institute Name"] }}</p>
-                        </div>
-                        <div>
-                            {% if edu["Course Name"] %}<p>{{ edu["Course Name"] }}</p>{% endif %}
-                        </div>
+                    <div>
+                        <p class="font-bold">{{ edu.STUDY_PLACE }}</p>
+                        {% if edu.COURSE %}<p>{{ edu.COURSE }}</p>{% endif %}
                     </div>
-                    <div class="flex flex-col gap-2">
-                        <div>
-                            {% if edu["Start Date"] or edu["End Date"] %}
-                            <p class="text-sm text-gray-600">{{ edu["Start Date"] }} - {{ edu["End Date"] }}</p>
-                            {% endif %}
-                        </div>
-                        <div>
-                            {% if edu["Grade"] %}<p>{{ edu["Grade"] }}</p>{% endif %}
-                        </div>
+                    <div class="text-right">
+                        {% if edu.START_DATE or edu.END_DATE %}
+                        <p class="text-sm text-gray-600">{{ edu.START_DATE }} - {{ edu.END_DATE }}</p>
+                        {% endif %}
+                        {% if edu.GRADE %}<p>{{ edu.GRADE }}</p>{% endif %}
                     </div>
-                </div>  
+                </div>
             </div>
             {% endfor %}
         </section>
@@ -57,31 +57,26 @@
             <h2 class="text-2xl font-semibold text-blue-700 border-b-2 border-blue-700 pb-1 mb-3">Experience</h2>
             {% for exp in Experience %}
             <div class="mb-4">
-                <div  class="flex flex-col gap-2">
-                    <div class="flex flex-row gap-4 justify-between">
-                        <div class="flex flex-col gap-2">
-                            <div><p class="font-bold">{{ exp["Role"] }}</p></div>
-                            <div><p class="font-bold">{% if exp["Company Name"] %}{{ exp["Company Name"] }}{% endif %}</p></div>
-                        </div>
-                        <div class="flex flex-col gap-2">
-                            <div>{% if exp["Location"] %}<p class="italic text-sm">{{ exp["Location"] }}</p>{% endif %}</div>
-                            <div>
-                                {% if exp["Start Date"] or exp["End Date"] %}
-                                <p class="text-sm text-gray-600">{{ exp["Start Date"] }} - {{ exp["End Date"] }}</p>
-                                {% endif %}
-                            </div>
-                        </div>
-                    </div>
+                <div class="flex flex-row gap-4 justify-between">
                     <div>
-                        {% if exp.Description %}
-                        <ul class="list-disc list-inside mt-1">
-                            {% for desc in exp.Description %}
-                            <li>{{ desc }}</li>
-                            {% endfor %}
-                        </ul>
+                        {% if exp.ROLE %}<p class="font-bold">{{ exp.ROLE }}</p>{% endif %}
+                        {% if exp.COMPANY %}<p class="font-bold">{{ exp.COMPANY }}</p>{% endif %}
+                    </div>
+                    <div class="text-right">
+                        {% if exp.LOCATION %}<p class="italic text-sm">{{ exp.LOCATION }}</p>{% endif %}
+                        {% if exp.START_DATE or exp.END_DATE %}
+                        <p class="text-sm text-gray-600">{{ exp.START_DATE }} - {{ exp.END_DATE }}</p>
                         {% endif %}
                     </div>
-                </div>    
+                </div>
+                {% if exp.DESCRIPTION %}
+                <ul class="list-disc list-inside mt-1">
+                    {% for desc in exp.DESCRIPTION %}
+                    <li>{{ desc }}</li>
+                    {% endfor %}
+                </ul>
+                {% endif %}
+                {% if exp.LINK %}<p class="text-sm text-blue-600 underline"><a href="{{ exp.LINK }}" target="_blank">{{ exp.LINK }}</a></p>{% endif %}
             </div>
             {% endfor %}
         </section>
@@ -91,9 +86,9 @@
         {% if Skills %}
         <section>
             <h2 class="text-2xl font-semibold text-blue-700 border-b-2 border-blue-700 pb-1 mb-3">Skills</h2>
-            <div class="flex flex-wrap">
+            <div class="flex flex-wrap gap-2">
                 {% for skill in Skills %}
-                <div>{{ skill }}</div>
+                <span class="px-3 py-1 bg-gray-100 rounded">{{ skill }}</span>
                 {% endfor %}
             </div>
         </section>
@@ -105,31 +100,26 @@
             <h2 class="text-2xl font-semibold text-blue-700 border-b-2 border-blue-700 pb-1 mb-3">Projects</h2>
             {% for proj in Projects %}
             <div class="mb-4">
-                {% if proj["Role"] or proj["Company Name"] %}
                 <div class="flex flex-row gap-4 justify-between">
-                    <div class="flex flex-col gap-2">
-                        <div><p class="font-bold">{{ proj["Role"] or "Project" }}</p></div>
-                        <div><p class="font-bold">{% if proj["Company Name"] %} | {{ proj["Company Name"] }}{% endif %}</p></div>
+                    <div>
+                        {% if proj.PROJECT_NAME %}<p class="font-bold">{{ proj.PROJECT_NAME }}</p>{% endif %}
+                        {% if proj.ROLE %}<p>{{ proj.ROLE }}</p>{% endif %}
                     </div>
-                    <div class="flex flex-col gap-2">
-                        <div>
-                            {% if proj["Start Date"] or proj["End Date"] %}
-                            <p class="text-sm text-gray-600">{{ proj["Start Date"] }} - {{ proj["End Date"] }}</p>
-                            {% endif %}
-                        </div>
-                        <div>{% if proj["Location"] %}<p class="italic text-sm">{{ proj["Location"] }}</p>{% endif %}</div>
+                    <div class="text-right">
+                        {% if proj.START_DATE or proj.END_DATE %}
+                        <p class="text-sm text-gray-600">{{ proj.START_DATE }} - {{ proj.END_DATE }}</p>
+                        {% endif %}
+                        {% if proj.LOCATION %}<p class="italic text-sm">{{ proj.LOCATION }}</p>{% endif %}
                     </div>
                 </div>
+                {% if proj.DESCRIPTION %}
+                <ul class="list-disc list-inside mt-1">
+                    {% for desc in proj.DESCRIPTION %}
+                    <li>{{ desc }}</li>
+                    {% endfor %}
+                </ul>
                 {% endif %}
-                <div class="flex flex-col gap-2">
-                    {% if proj.Description %}
-                    <ul class="list-disc list-inside mt-1">
-                        {% for desc in proj.Description %}
-                        <li>{{ desc }}</li>
-                        {% endfor %}
-                    </ul>
-                    {% endif %}
-                </div>
+                {% if proj.LINK %}<p class="text-sm text-blue-600 underline"><a href="{{ proj.LINK }}" target="_blank">{{ proj.LINK }}</a></p>{% endif %}
             </div>
             {% endfor %}
         </section>
@@ -161,29 +151,21 @@
             <h2 class="text-2xl font-semibold text-blue-700 border-b-2 border-blue-700 pb-1 mb-3">Certifications</h2>
             <ul class="list-disc list-inside">
                 {% for cert in Certifications %}
-                <li>{{ cert }}</li>
+                <li>
+                    {% if cert.NAME %}{{ cert.NAME }}{% endif %}
+                    {% if cert.LINK %} - <a href="{{ cert.LINK }}" target="_blank" class="text-blue-600 underline">{{ cert.LINK }}</a>{% endif %}
+                </li>
                 {% endfor %}
             </ul>
         </section>
         {% endif %}
 
-        <!-- KEY CHANGES
-        {% if Key_Changes %}
-        <section>
-            <h2 class="text-2xl font-semibold text-blue-700 border-b-2 border-blue-700 pb-1 mb-3">Key Changes Made</h2>
-            <ul class="list-disc list-inside">
-                {% for change in Key_Changes %}
-                <li>{{ change }}</li>
-                {% endfor %}
-            </ul>
-        </section>
-        {% endif %} -->
-        <button onclick="window.print()" 
-            class="mt-6 bg-blue-500 text-white px-4 py-2 rounded">
-        Download as PDF
-    </button>
+        
 
+        <!-- DOWNLOAD BUTTON -->
+        <button onclick="window.print()" class="mt-6 bg-blue-500 text-white px-4 py-2 rounded">
+            Download as PDF
+        </button>
     </main>
-
 </body>
 </html>

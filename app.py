@@ -57,37 +57,37 @@ if st.button("Optimised Resume"):
         2. Divide the resume into sections 
             a. Full Name followed by email id (if given), contact number (if given)
             b. Contact Details
-                1)Email Id (if available)
-                2)Contact Number (if available)
-                3)Social Media Accounts eg. LinkedIn/Leetcode/Codeforces/Codolio/Instagram/Facebook etc (if available)
+                1)Email Id (if available) USE KEY NAME -> EMAIL
+                2)Contact Number (if available) USE KEY NAME -> PHONE
+                3)Social Media Accounts eg. LinkedIn/Leetcode/Codeforces/Codolio/Instagram/Facebook etc (if available) -> USE KEY NAME -> ACCOUNTS
             b. Education
-                1)School/College/Institute Name
-                2)Start Date and End Date (if available)
-                3)Course Name (if available)
-                4)Grade (if available)
+                1)School/College/Institute Name USE KEY NAME -> STUDY_PLACE
+                2)Start Date and End Date (if available) USE KEY NAME -> START_DATE, END_DATE
+                3)Course Name (if available) USE KEY NAME -> COURSE
+                4)Grade (if available) USE KEY NAME -> GRADE
             c. Experience instruction -> FOLLOW REVERSE CHRONOLOGICAL ORDER
-                1)Company Name (if available)
-                2)Start Date and End Date (if available)
-                3)Role (if available)
-                4)Location (if available)
-                5)Description of your job/internship (if available)
-                6)Work Link (if available)
+                1)Company Name (if available)  USE KEY NAME -> COMPANY
+                2)Start Date and End Date (if available) USE KEY NAME -> START_DATE, END_DATE
+                3)Role (if available) USE KEY NAME -> ROLE
+                4)Location (if available) USE KEY NAME -> LOCATION
+                5)Description of your job/internship (if available) USE KEY NAME -> DESCRIPTION
+                6)Work Link (if available) USE KEY NAME -> LINK
             d. Skills
-                1)Skill name (if available)
+                1)Skill name (if available) 
             e. Projects (if required) instruction -> FOLLOW REVERSE CHRONOLOGICAL ORDER
-                1)Project Name (if available)
-                2)Start Date and End Date (if available)
-                3)Role (if available)
-                4)Location (if available)
-                5)Description of your job/internship (if available)
-                3)Project Link OR Code link (if available)
+                1)Project Name (if available) USE KEY NAME -> PROJECT_NAME
+                2)Start Date and End Date (if available) USE KEY NAME -> START_DATE, END_DATE
+                3)Role (if available) USE KEY NAME -> ROLE
+                4)Location (if available) USE KEY NAME -> LOCATION
+                5)Description of your job/internship (if available) USE KEY NAME -> DESCRIPTION
+                3)Project Link OR Code link (if available) USE KEY NAME -> LINK
             f. Achievements
                 1)Description (if available)
             g. Languages
                 1) Language Name (if available)
             h. Certifications
-                1) Certification Name (if available)
-                2) Certificate Link (if available)
+                1) Certification Name (if available) USE KEY NAME -> NAME
+                2) Certificate Link (if available) USE KEY NAME -> LINK
         2. A bullet list of key changes made
 
         Give the details in this format
@@ -99,9 +99,10 @@ if st.button("Optimised Resume"):
         Achievements : <Achievements>
         Languages : <Languages>
         Certifications : <Certifications>
-        AS JSON FORMAT WITH KEYS AS Name, Education, Experience, Skills, Projects, Achievements, Languages, Certifications, Key_Changes
+        AS JSON FORMAT WITH KEYS AS Name, Contact, Education, Experience, Skills, Projects, Achievements, Languages, Certifications, Key_Changes
         For Values, 
         Name : string
+        Contact: Inner json containing the details
         Education : List of inner jsons with keys as specified in the format
         Experience : List of inner jsons with keys as specified in the format
         Skills : List of different skill names
@@ -110,6 +111,9 @@ if st.button("Optimised Resume"):
         Languages : List of Languages
         Certifications : List of Certifications
         Key_Changes : List of Key Changes
+
+        for ACCOUNTS -> a LIST OF JSON containing two keys namely platform and link.
+        ACCOUNTS MUST COME INSIDE THE JSON OF Contact.
         USE ATS FRIENDLY KEYWORDS DEPENDING UPON JOB DESCRIPTION
         """
 
