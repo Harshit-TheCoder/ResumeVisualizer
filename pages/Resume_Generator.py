@@ -1,10 +1,17 @@
 import streamlit as st
+from jinja2 import Environment, FileSystemLoader
+import streamlit.components.v1 as components
+import json
+
+env = Environment(loader=FileSystemLoader('.'))
+template = env.get_template('generated_resume.html')
 
 st.title("Resume Builder with Fixed Sections")
 
 # --- Personal Info ---
-st.header("Full Name and Contact")
+st.header("Full Name")
 full_name = st.text_input("Full Name", key="full_name")
+st.header("Contact")
 email = st.text_input("Email", key="email")
 phone = st.text_input("Phone Number", key="phone")
 
@@ -219,16 +226,20 @@ if st.button("Show Resume JSON"):
             return bool(entry)
 
     resume_json = {
-        "FULL_NAME": full_name,
-        "EMAIL": email,
-        "PHONE": phone,
-        "ACCOUNTS": [a for a in st.session_state.accounts if is_filled(a)],
-        "EDUCATION": [edu for edu in st.session_state.educations if is_filled(edu)],
-        "EXPERIENCE": [e for e in st.session_state.experiences if is_filled(e)],
-        "SKILLS": [s for s in st.session_state.skills if s.strip() != ""],
-        "PROJECTS": [p for p in st.session_state.projects if is_filled(p)],
-        "ACHIEVEMENTS": [ach for ach in st.session_state.achievements if ach.strip() != ""],
-        "LANGUAGES": [lang for lang in st.session_state.languages if lang.strip() != ""],
-        "CERTIFICATIONS": [cert for cert in st.session_state.certifications if is_filled(cert)],
+        "Name": full_name,
+        "Contact" : {
+            "EMAIL": email,
+            "PHONE": phone,
+            "ACCOUNTS": [a for a in st.session_state.accounts if is_filled(a)],
+        },
+        "Education": [edu for edu in st.session_state.educations if is_filled(edu)],
+        "Experience": [e for e in st.session_state.experiences if is_filled(e)],
+        "Skills": [s for s in st.session_state.skills if s.strip() != ""],
+        "Projects": [p for p in st.session_state.projects if is_filled(p)],
+        "Achievements": [ach for ach in st.session_state.achievements if ach.strip() != ""],
+        "Languages": [lang for lang in st.session_state.languages if lang.strip() != ""],
+        "Certifications": [cert for cert in st.session_state.certifications if is_filled(cert)],
     }
-    st.json(resume_json)
+    # st.json(resume_json)
+    rendered_html = template.render(**resume_json)
+    components.html(rendered_html, height=1000,width=650, scrolling=True)

@@ -77,16 +77,16 @@
                     </div>
                 </div>
                 {% if exp.DESCRIPTION %}
-                <ul class="list-disc list-inside mt-1">
-                    {% for line in exp.DESCRIPTION %}
+                <!-- <ul class="list-disc list-inside mt-1"> -->
+                    <!-- {% for line in exp.DESCRIPTION %}
                     {% if line.strip().startswith('•') %}
                             <li>{{ line.lstrip('• ').strip() }}</li>
-                        {% else %}
-                            <p style="white-space: normal; word-wrap: break-word;">{{ line }}</p>
-                    {% endif %}
+                        {% else %} -->
+                            <p style="white-space: normal; word-wrap: break-word;">{{ exp.DESCRIPTION }}</p>
+                    <!-- {% endif %} -->
                     <!-- <li>{{ desc }}</li> -->
-                    {% endfor %}
-                </ul>
+                    <!-- {% endfor %} -->
+                <!-- </ul> -->
                 {% endif %}
                 {% if exp.LINK %}<p class="text-sm text-blue-600 underline"><a href="{{ exp.LINK }}" target="_blank">{{ exp.LINK }}</a></p>{% endif %}
             </div>
@@ -125,15 +125,16 @@
                     </div>
                 </div>
                 {% if proj.DESCRIPTION %}
-                <ul class="list-disc list-inside mt-1">
-                    {% for line in proj.DESCRIPTION %}
+                <!-- <ul class="list-disc list-inside mt-1"> -->
+                    <p style="white-space: normal; word-wrap: break-word;">{{ proj.DESCRIPTION }}</p>
+                    <!-- {% for line in proj.DESCRIPTION %}
                         {% if line.strip().startswith('•') %}
                             <li>{{ line.lstrip('• ').strip() }}</li>
                         {% else %}
                             <p style="white-space: normal; word-wrap: break-word;">{{ line }}</p>
                         {% endif %}
-                    {% endfor %}
-                </ul>
+                    {% endfor %} -->
+                <!-- </ul> -->
                 {% endif %}
                 {% if proj.LINK %}<p class="text-sm text-blue-600 underline"><a href="{{ proj.LINK }}" target="_blank">{{ proj.LINK }}</a></p>{% endif %}
             </div>
@@ -150,7 +151,7 @@
                     <!-- {% if line.strip().startswith('•') %}
                             <li>{{ line.lstrip('• ').strip() }}</li>
                         {% else %} -->
-                            <p>{{ line }}</p>
+                            <li>{{ line }}</li>
                         <!-- {% endif %} -->
                 {% endfor %}
             </ul>
