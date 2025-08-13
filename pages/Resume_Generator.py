@@ -7,7 +7,7 @@ env = Environment(loader=FileSystemLoader('.'))
 template = env.get_template('generated_resume.html')
 
 st.title("Resume Builder with Fixed Sections")
-
+st.header("U DON'T NEED TO FILL ALL THE FIELDS UNDER EACH SECTION, THEY ARE OPTIONAL")
 # --- Personal Info ---
 st.header("Full Name")
 full_name = st.text_input("Full Name", key="full_name")
