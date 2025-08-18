@@ -17,23 +17,23 @@ model = genai.GenerativeModel("gemini-2.5-flash")
 
 st.title("📄 AI Resume Optimiser")
 st.write("Upload your resume and paste a job description to get an ATS-friendly optimised version")
-st.markdown(
-    """
-    <style>
-    /* remove horizontal padding/margin from Streamlit main content */
-    .block-container {
-        padding-left: 5rem;
-        padding-right: 0rem;
-        max-width: 100vw;
-        margin-left: 5;
-        margin-right: 0;
-    }
-    </style>
-    """,
-    unsafe_allow_html=True,
-)
+# st.markdown(
+#     """
+#     <style>
+#     /* remove horizontal padding/margin from Streamlit main content */
+#     .block-container {
+#         padding-left: 5rem;
+#         padding-right: 0rem;
+#         max-width: 100vw;
+#         margin-left: 5;
+#         margin-right: 0;
+#     }
+#     </style>
+#     """,
+#     unsafe_allow_html=True,
+# )
 
-col1, col2 = st.columns([1, 1])
+# col1, col2 = st.columns([1, 1])
 
 uploaded_file = st.file_uploader("Upload Resume (PDF/DOCX)", type=["pdf", "docx"], width=700)
 job_description = st.text_area("Paste Job Description", height=200, width=700)
@@ -160,17 +160,17 @@ if st.button("Optimised Resume"):
                 st.stop()
             rendered_html = template.render(**resume_json)
 
-            with col1:
-                st.header("Key Changes Made")
-                key_changes = resume_json.get("Key_Changes", [])
-                if key_changes:
-                    for change in key_changes:
-                        st.markdown(f"- {change}")
-                else:
-                    st.write("No key changes found.")
+            
+            st.header("Key Changes Made")
+            key_changes = resume_json.get("Key_Changes", [])
+            if key_changes:
+                for change in key_changes:
+                    st.markdown(f"- {change}")
+            else:
+                st.write("No key changes found.")
                 # Show optimized resume HTML on right
-            with col2:
-                components.html(rendered_html, height=1000,width=650, scrolling=True)
+         
+            components.html(rendered_html, height=1000,width=650, scrolling=True)
             # st.markdown(rendered_html, unsafe_allow_html=True)
     else:
         st.warning("Please upload a resume and enter the job description.")
